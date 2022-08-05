@@ -7,11 +7,11 @@
 
   1. Clone the repository
 
-      `repo link goes here`
+      `https://github.com/vid-io/vidiq-fe-test-project.git`
 
   2. Change directory to the repo
 
-      `cd react-context-starter`
+      `cd vidiq-fe-test-project`
 
   3. Install the app dependencies
 
@@ -48,4 +48,4 @@ a table of Keywords and highlights the trending ones.
 
 If you have any questions, please ask!
 
-When your project is done, please invite our reviewers (using GitHub nicknames: "TBD") to the Git repo. The project should be completed within the next 7 days.
+When your project is done, please create a branch with your name `firstname-lastname`, commit your work there and open a "Pull request", then request a code review from `aidurber`, `3tmaan`, `thinkswan`, `rgliever`, `akhaledd`. The project should be completed within the next 7 days.
