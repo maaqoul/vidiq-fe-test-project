@@ -1,5 +1,8 @@
 # vidIQ - Frontend test assignment
 
+Hi there and thank you for taking the time to complete this test.
+Good luck and we hope you will find it interesting!
+
 ## Instructions
 
 - Start the app
@@ -8,29 +11,19 @@
 
 - Start the API server
 
-    `yarn run server`
+    `yarn server`
 
 ## Brief
 
-The goal of this project is to create a web application that displays
-a table of Keywords and highlights the trending ones.
+The goal of this project is to create a web application that displays a table of Keywords, paginate through them and highlights the trending ones.
 
 ## Requirements
 
-- Must use TypeScript.
-- Must use [these designs](https://www.figma.com/file/E1rI2ufda9jmxcoLSeba1L/Test-project?node-id=0%3A1) to build your layout. Please notice the Desktop and the Mobile visuals.
-- Must use the provided REST API to fetch your data. You can do it by running `yarn run server` if you haven't already :)
-- Must paginate the list of Keywords with the "Load more Keywords" button.
-- Users must be able to sort ascending and descending the columns.
-- On Mobile, only 2 columns are visible, make it possible so that the user can view a different column from the dropdown.
-- The dropdown selection and the column sorting should persist when the user closes and reopens the web app.
-- Add automated or unit tests where it makes sense.
+- Use the provided REST API to fetch your data — check the [instructions](#instructions) above.
+- Use [these designs](https://www.figma.com/file/E1rI2ufda9jmxcoLSeba1L/Test-project?node-id=0%3A1) to build your layout. On mobile, only 2 columns are visible, you need to make it possible for users to view a different column using the dropdown.
+- Users need to be able to paginate through the list of Keywords. You can use whatever pagination strategy you like, just make it so that it persists when closing and/or reopening the app.
+- Users need to be able to sort ascending and descending the columns. This should also be persisted.
 
-## Bonus
-
-- Add Error handling for when the API is unavailable.
-- Add some accessibility features.
-
-If you have any questions, please ask!
+Ask questions and check in as often as you like during the project.
 
 To complete your homework, please fork this repo and commit your work to your fork. When you are ready for us to look at it, give us access to your fork so we can review and run it.
