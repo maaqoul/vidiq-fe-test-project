@@ -11,6 +11,7 @@ import React, { useEffect } from "react";
 
 import axios from "axios";
 import { TableHeader } from "../../models/Table";
+import { getKeywords } from "../../services/api";
 
 interface Keyword {
   id: number;
@@ -63,12 +64,12 @@ const BodyColumnMapper: any = {
   ),
 };
 export default function ResponsiveTable({ selectedColumn }: any) {
-  const [data, setData] = React.useState(() => []);
+  const [data, setData] = React.useState<Keyword[]>(() => [] as Keyword[]);
 
   useEffect(() => {
     (async () => {
-      const result = await axios("http://localhost:3004/keywords");
-      setData(result.data);
+      const result = await getKeywords();
+      setData(result);
       console.log(result);
     })();
   }, []);
