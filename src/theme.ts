@@ -8,9 +8,10 @@ const config: ThemeConfig = {
     initialColorMode: 'light',
     useSystemColorMode: false,
 }
+
 // breakpoints
 const breakpoints = {
-    sm: '24.375em',
+    sm: '47em',
     md: '67.3125em'
 }
 
@@ -21,7 +22,16 @@ const components: ComponentDefaultProps = {
     Box
 }
 
+const styles = {
+    global: {
+        'html, body': {
+            boxSizing: "border-box",
+            padding: 0,
+            margin: 0
+        }
+    }
+}
 
-const theme = extendTheme({ config, components, breakpoints })
+const theme = extendTheme({ config, components, breakpoints, styles })
 
 export default theme

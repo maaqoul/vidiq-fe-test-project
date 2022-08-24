@@ -1,7 +1,17 @@
 import { Box, Heading, Select, Flex, Show } from "@chakra-ui/react";
+import React from "react";
+import { TableHeader } from "../../models/Table";
 import ResponsiveTable from "../ResponsiveTable";
 
 function App() {
+  const [selectedColumn, setSelectedColumn] = React.useState(
+    () => TableHeader.search_volume
+  );
+
+  const onChangeHandler = ({ target }: any) => {
+    setSelectedColumn(target.value);
+  };
+
   return (
     <Box>
       <Flex
@@ -13,17 +23,27 @@ function App() {
         <Heading py="4" ml="4">
           List of Keywords
         </Heading>
-        <Show below="md">
+        <Show below="sm">
           <Box mr="5" py="2">
-            <Select placeholder="Select option" borderRadius="6.25rem">
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
+            <Select
+              placeholder="Select option"
+              borderRadius="6.25rem"
+              onChange={onChangeHandler}
+            >
+              <option value={TableHeader.search_volume}>
+                {TableHeader.search_volume}
+              </option>
+              <option value={TableHeader.competition}>
+                {TableHeader.competition}
+              </option>
+              <option value={TableHeader.overall_score}>
+                {TableHeader.overall_score}
+              </option>
             </Select>
           </Box>
         </Show>
       </Flex>
-      <ResponsiveTable />
+      <ResponsiveTable selectedColumn={selectedColumn} />
     </Box>
   );
 }
