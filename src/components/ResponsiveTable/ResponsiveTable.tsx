@@ -1,109 +1,61 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  Hide,
-  Show,
-  Table,
-  useMediaQuery,
-} from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { Box, Divider, Flex, Hide, Show } from "@chakra-ui/react";
+import React, { ReactNode, useEffect } from "react";
+import { HEADER_HEIGHT } from "../../Constants";
+import { Keyword } from "../../models/Keyword";
 
-import axios from "axios";
 import { TableHeader } from "../../models/Table";
 import { getKeywords } from "../../services/api";
+import ResponsiveTableHeader from "./ResponsiveTableHeader";
 
-interface Keyword {
-  id: number;
-  keyword: string;
-  search_volume: number;
-  competition: string;
-  overall_score: number;
+type BodyColumn = {
+  [key: string | number | symbol]: (k: Keyword) => ReactNode;
+};
+interface Props {
+  selectedColumn: string;
 }
 
-interface Option {
-  value: string;
-  label: string;
-}
-
-const HEADER_HEIGHT = 84;
-
-const HeaderColumnMapper: any = {
-  [TableHeader.competition]: (
-    <Box fontSize="0.75rem" lineHeight="1rem" color="#7A7A7A" flex="1" p="3">
-      {TableHeader.competition}
+const BodyColumnMapper: BodyColumn = {
+  [TableHeader.competition]: (keyword: Keyword) => (
+    <Box height="2.3125rem" lineHeight="1rem" fontSize="0.75rem" flex="1" p="3">
+      {keyword.competition}
     </Box>
   ),
-  [TableHeader.search_volume]: (
-    <Box fontSize="0.75rem" lineHeight="1rem" color="#7A7A7A" flex="1" p="3">
-      {TableHeader.search_volume}
+  [TableHeader.search_volume]: (keyword: Keyword) => (
+    <Box height="2.3125rem" lineHeight="1rem" fontSize="0.75rem" flex="1" p="3">
+      {keyword.search_volume}
     </Box>
   ),
-  [TableHeader.overall_score]: (
-    <Box fontSize="0.75rem" lineHeight="1rem" color="#7A7A7A" flex="1" p="3">
-      {TableHeader.overall_score}
+  [TableHeader.overall_score]: (keyword: Keyword) => (
+    <Box height="2.3125rem" lineHeight="1rem" fontSize="0.75rem" flex="1" p="3">
+      {keyword.overall_score}
     </Box>
   ),
 };
 
-const BodyColumnMapper: any = {
-  [TableHeader.competition]: (d: any) => (
-    <Box height="2.3125rem" lineHeight="1rem" fontSize="0.75rem" flex="1" p="3">
-      {d["competition"]}
-    </Box>
-  ),
-  [TableHeader.search_volume]: (d: any) => (
-    <Box height="2.3125rem" lineHeight="1rem" fontSize="0.75rem" flex="1" p="3">
-      {d["search_volume"]}
-    </Box>
-  ),
-  [TableHeader.overall_score]: (d: any) => (
-    <Box height="2.3125rem" lineHeight="1rem" fontSize="0.75rem" flex="1" p="3">
-      {d["overall_score"]}
-    </Box>
-  ),
-};
-export default function ResponsiveTable({ selectedColumn }: any) {
-  const [data, setData] = React.useState<Keyword[]>(() => [] as Keyword[]);
+export default function ResponsiveTable({
+  selectedColumn,
+}: Props): JSX.Element {
+  const [keywords, setKeywords] = React.useState<Keyword[]>(() => []);
 
   useEffect(() => {
     (async () => {
       const result = await getKeywords();
-      setData(result);
-      console.log(result);
+      setKeywords(result);
     })();
   }, []);
 
   return (
     <Box h="full" overflow="hidden">
-      <Box height="2.3125rem" boxSize="full" boxShadow="md">
-        <Flex flexDirection="row">
-          <Box
-            fontSize="0.75rem"
-            lineHeight="1rem"
-            color="#7A7A7A"
-            flex="3"
-            p="3"
-          >
-            {TableHeader.keyword}
-          </Box>
-          <Show below="sm">{HeaderColumnMapper[selectedColumn]}</Show>
-          <Hide below="sm">
-            {HeaderColumnMapper[TableHeader.search_volume]}
-            {HeaderColumnMapper[TableHeader.competition]}
-            {HeaderColumnMapper[TableHeader.overall_score]}
-          </Hide>
-        </Flex>
-      </Box>
+      <ResponsiveTableHeader selectedColumn={selectedColumn} />
       <Box
         w="full"
         overflowY="auto"
         h={`calc(100vh - ${HEADER_HEIGHT}px)`}
         scrollBehavior="smooth"
       >
-        {data.map((d) => (
-          <>
-            <Flex flexDirection="row" key={d["id"]}>
+        {keywords.map((keyword) => (
+          <Box key={keyword.id}>
+            <Flex flexDirection="row">
               <Box
                 height="2.3125rem"
                 lineHeight="1rem"
@@ -111,17 +63,19 @@ export default function ResponsiveTable({ selectedColumn }: any) {
                 flex="3"
                 p="3"
               >
-                {d["keyword"]}
+                {keyword.keyword}
               </Box>
-              <Show below="sm">{BodyColumnMapper[selectedColumn](d)}</Show>
+              <Show below="sm">
+                {BodyColumnMapper[selectedColumn](keyword)}
+              </Show>
               <Hide below="sm">
-                {BodyColumnMapper[TableHeader.search_volume](d)}
-                {BodyColumnMapper[TableHeader.competition](d)}
-                {BodyColumnMapper[TableHeader.overall_score](d)}
+                {BodyColumnMapper[TableHeader.search_volume](keyword)}
+                {BodyColumnMapper[TableHeader.competition](keyword)}
+                {BodyColumnMapper[TableHeader.overall_score](keyword)}
               </Hide>
             </Flex>
             <Divider />
-          </>
+          </Box>
         ))}
       </Box>
     </Box>

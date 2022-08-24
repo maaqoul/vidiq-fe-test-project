@@ -7,7 +7,6 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@tanstack/react-table": "^8.5.11",
-    "axios": "^0.27.2",
     "framer-motion": "^7.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
