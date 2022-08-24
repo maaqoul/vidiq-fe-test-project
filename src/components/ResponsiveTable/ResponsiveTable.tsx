@@ -1,10 +1,11 @@
 import { Box, Divider, Flex, Hide, Show } from "@chakra-ui/react";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { HEADER_HEIGHT } from "../../Constants";
 import { Keyword } from "../../models/Keyword";
 
 import { TableHeader } from "../../models/Table";
-import { getKeywords } from "../../services/api";
+import { getKeywords, getTrendingKeywords } from "../../services/api";
+import ResponsiveTableBody from "./ResponsiveTableBody";
 import ResponsiveTableHeader from "./ResponsiveTableHeader";
 
 type BodyColumn = {
@@ -35,7 +36,16 @@ const BodyColumnMapper: BodyColumn = {
 export default function ResponsiveTable({
   selectedColumn,
 }: Props): JSX.Element {
-  const [keywords, setKeywords] = React.useState<Keyword[]>(() => []);
+  const [keywords, setKeywords] = useState<Keyword[]>(() => []);
+  const [trendingKeywords, setTrendingKeywords] = useState<number[]>(() => []);
+
+  useEffect(() => {
+    const fetchTrendingKeywords = async () => {
+      const result = await getTrendingKeywords();
+      setTrendingKeywords(result);
+    };
+    fetchTrendingKeywords();
+  });
 
   useEffect(() => {
     (async () => {
@@ -47,37 +57,11 @@ export default function ResponsiveTable({
   return (
     <Box h="full" overflow="hidden">
       <ResponsiveTableHeader selectedColumn={selectedColumn} />
-      <Box
-        w="full"
-        overflowY="auto"
-        h={`calc(100vh - ${HEADER_HEIGHT}px)`}
-        scrollBehavior="smooth"
-      >
-        {keywords.map((keyword) => (
-          <Box key={keyword.id}>
-            <Flex flexDirection="row">
-              <Box
-                height="2.3125rem"
-                lineHeight="1rem"
-                fontSize="0.75rem"
-                flex="3"
-                p="3"
-              >
-                {keyword.keyword}
-              </Box>
-              <Show below="sm">
-                {BodyColumnMapper[selectedColumn](keyword)}
-              </Show>
-              <Hide below="sm">
-                {BodyColumnMapper[TableHeader.search_volume](keyword)}
-                {BodyColumnMapper[TableHeader.competition](keyword)}
-                {BodyColumnMapper[TableHeader.overall_score](keyword)}
-              </Hide>
-            </Flex>
-            <Divider />
-          </Box>
-        ))}
-      </Box>
+      <ResponsiveTableBody
+        keywords={keywords}
+        selectedColumn={selectedColumn}
+        trendingKeywords={trendingKeywords}
+      />
     </Box>
   );
 }

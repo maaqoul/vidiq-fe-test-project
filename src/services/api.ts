@@ -28,7 +28,7 @@ export function getKeywords(): Promise<Keyword[]> {
     return handleApiCall(url);
 }
 
-export function getTrendingKeywords(): Promise<string[]> {
+export function getTrendingKeywords(): Promise<any> {
     const url = generateUrl('trending-keywords');
 
     return handleApiCall(url);
