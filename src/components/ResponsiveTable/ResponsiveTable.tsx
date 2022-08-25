@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import ResponsiveTableBody from "./ResponsiveTableBody";
@@ -22,13 +22,20 @@ export default function ResponsiveTable({
     sortParam: "keyword",
     order: "asc",
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [keywords, setKeywords] = useState<Keyword[]>(() => []);
+  const [totalCount, setTotalCount] = useState<number>(() => 0);
+  const [trendingKeywords, setTrendingKeywords] = useState<number[]>(() => []);
+  const [currentPage, setCurrentPage] = useState(
+    () => persistedOptions.currentPage
+  );
+  const [order, setOrder] = useState(() => persistedOptions.order);
+  const [sortParam, setSortParam] = useState(() => persistedOptions.sortParam);
 
-  const [keywords, setKeywords] = useState<Keyword[]>([]);
-  const [totalCount, setTotalCount] = useState<number>(0);
-  const [trendingKeywords, setTrendingKeywords] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState(persistedOptions.currentPage);
-  const [order, setOrder] = useState(persistedOptions.order);
-  const [sortParam, setSortParam] = useState(persistedOptions.sortParam);
+  const tableHasScrollbarOnWindows =
+    window.navigator.userAgent.indexOf("Win") !== -1 &&
+    keywords.length >= KEYWORDS_PER_PAGE;
 
   useEffect(() => {
     const fetchTrendingKeywords = async () => {
@@ -40,13 +47,19 @@ export default function ResponsiveTable({
 
   useEffect(() => {
     (async () => {
-      const result = await getKeywords({
-        page: currentPage,
-        sort: sortParam,
-        order,
-      });
-      setKeywords(result.data);
-      setTotalCount(Number(result.total_count));
+      try {
+        const result = await getKeywords({
+          page: currentPage,
+          sort: sortParam,
+          order,
+        });
+        setKeywords(result.data);
+        setTotalCount(Number(result.total_count));
+        setLoading(false);
+      } catch {
+        setError(true);
+        setLoading(false);
+      }
     })();
   }, [currentPage, sortParam, order]);
 
@@ -64,19 +77,49 @@ export default function ResponsiveTable({
   };
 
   return (
-    <Box h="full" overflow="hidden">
-      <ResponsiveTableHeader onSort={onSort} selectedColumn={selectedColumn} />
-      <ResponsiveTableBody
-        keywords={keywords}
+    <Box h="full" overflow="hidden" role="table">
+      <ResponsiveTableHeader
+        onSort={onSort}
         selectedColumn={selectedColumn}
-        trendingKeywords={trendingKeywords}
+        hasRightPadding={tableHasScrollbarOnWindows}
       />
-      <ResponsiveTablePagination
-        keywordsPerPage={KEYWORDS_PER_PAGE}
-        totalKeywords={totalCount}
-        onPaginate={paginate}
-        pageNumber={currentPage}
-      />
+      {loading && (
+        <Flex
+          height="80vh"
+          width="full"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Spinner color="teal" size="xl" />
+        </Flex>
+      )}
+
+      {error ? (
+        <Flex
+          color="red"
+          height="80vh"
+          width="full"
+          alignItems="center"
+          justifyContent="center"
+        >
+          Something Went Wrong, if only had more time I would have figure it out
+          :p
+        </Flex>
+      ) : (
+        <>
+          <ResponsiveTableBody
+            keywords={keywords}
+            selectedColumn={selectedColumn}
+            trendingKeywords={trendingKeywords}
+          />
+          <ResponsiveTablePagination
+            keywordsPerPage={KEYWORDS_PER_PAGE}
+            totalKeywords={totalCount}
+            onPaginate={paginate}
+            pageNumber={currentPage}
+          />
+        </>
+      )}
     </Box>
   );
 }

@@ -34,7 +34,7 @@ export default function ResponsiveTableSorting({
           onClick={() => onSort(sortParamMapper[sortParam], "asc")}
         />
         <IconButton
-          aria-label="Sort Ascending"
+          aria-label="Sort Descending"
           icon={<ChevronDownIcon />}
           backgroundColor="#fff"
           p="0"

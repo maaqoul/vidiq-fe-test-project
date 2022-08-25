@@ -12,10 +12,12 @@ type HeaderColumn = {
 interface Props {
   selectedColumn: string;
   onSort: (sortParam: string, order: string) => void;
+  hasRightPadding: boolean;
 }
 export default function ResponsiveTableHeader({
   selectedColumn,
   onSort,
+  hasRightPadding,
 }: Props): JSX.Element {
   const HeaderColumnMapper: HeaderColumn = {
     [TableHeader.competition]: (
@@ -44,7 +46,12 @@ export default function ResponsiveTableHeader({
     ),
   };
   return (
-    <Box height="2.3125rem" boxSize="full" boxShadow="md">
+    <Box
+      height="2.3125rem"
+      boxSize="full"
+      boxShadow="md"
+      paddingRight={hasRightPadding ? "17px" : "unset"}
+    >
       <ResponsiveTableRow>
         <ResponsiveTableElement primary header>
           <ResponsiveTableSorting

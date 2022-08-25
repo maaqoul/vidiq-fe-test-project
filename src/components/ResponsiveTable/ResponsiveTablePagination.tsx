@@ -18,7 +18,7 @@ const ResponsiveTablePagination = ({
   ].map<number>((_, index) => index + 1);
 
   return (
-    <Flex flexDirection="row" width="full" justifyContent="center">
+    <Flex flexDirection="row" width="full" justifyContent="center" p="0.6rem">
       {pageNumbers.map((number) => (
         <Button
           colorScheme="teal"
@@ -27,6 +27,7 @@ const ResponsiveTablePagination = ({
           size="xs"
           key={number}
           onClick={() => onPaginate(number)}
+          arial-label="paginate"
         >
           {number}
         </Button>

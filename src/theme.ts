@@ -25,7 +25,11 @@ const styles = {
         'html, body': {
             boxSizing: "border-box",
             padding: 0,
-            margin: 0
+            margin: 0,
+            height: '100vh'
+        },
+        '#root': {
+            height: '100vh'
         }
     }
 }
