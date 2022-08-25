@@ -27,7 +27,7 @@ async function handleApiCall<T, U extends Record<string, unknown> = {}>(url: str
     return {
         data, ...(Object.entries(options?.headers ?? {})
             .reduce((accumulatedHeadersValues, currentEntry) =>
-                ({ ...accumulatedHeadersValues, [currentEntry[0]]: Number(response.headers.get(currentEntry[1])) }), {} as U))
+                ({ ...accumulatedHeadersValues, [currentEntry[0]]: response.headers.get(currentEntry[1]) }), {} as U))
     };
 }
 

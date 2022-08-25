@@ -3,11 +3,11 @@ import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { TableHeader } from "../../models/Table";
 
 interface Props {
-  sortParam: string;
+  sortParam: TableHeader;
   onSort: (sortParam: string, order: string) => void;
 }
 
-const sortParamMapper: any = {
+const sortParamMapper: { [key: string]: string } = {
   [TableHeader.competition]: "competition",
   [TableHeader.keyword]: "keyword",
   [TableHeader.overall_score]: "overall_score",
