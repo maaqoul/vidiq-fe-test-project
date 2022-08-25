@@ -1,7 +1,6 @@
 import { extendTheme, type ThemeConfig, type ComponentDefaultProps } from '@chakra-ui/react'
-import Heading from './components/App/Heading'
-import Select from './components/ColumnSelector/Select'
-import Box from './components/ResponsiveTable/Box'
+import Heading from './components/App/Heading';
+import Select from './components/ColumnSelector/Select';
 
 // color mode config
 const config: ThemeConfig = {
@@ -19,7 +18,6 @@ const breakpoints = {
 const components: ComponentDefaultProps = {
     Heading,
     Select,
-    Box
 }
 
 const styles = {

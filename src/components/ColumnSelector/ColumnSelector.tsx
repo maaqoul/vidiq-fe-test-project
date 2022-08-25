@@ -17,7 +17,9 @@ export default function ColumnSelector({ onChangeHandler }: Props) {
       <Box mr="5" py="2">
         <Select borderRadius="6.25rem" onChange={onChangeHandler}>
           {options.map((option) => (
-            <option value={option}>{option}</option>
+            <option value={option} key={option}>
+              {option}
+            </option>
           ))}
         </Select>
       </Box>

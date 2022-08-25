@@ -1,6 +1,13 @@
-import { Box, Divider, Flex, Hide, Show } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Flex,
+  Hide,
+  Show,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { ReactNode } from "react";
-import { HEADER_HEIGHT } from "../../Constants";
+import { DESKTOP_SPACE_HEIGHT, MOBILE_SPACE_HEIGHT } from "../../Constants";
 import { Keyword } from "../../models/Keyword";
 import { TableHeader } from "../../models/Table";
 import ElementScore from "./ElementScore";
@@ -20,29 +27,34 @@ type BodyColumn = {
   [key: StringOrNumber | symbol]: (k: Keyword) => ReactNode;
 };
 
+const BodyColumnMapper: BodyColumn = {
+  [TableHeader.competition]: (keyword: Keyword) => (
+    <ResponsiveTableElement children={keyword.competition} />
+  ),
+  [TableHeader.search_volume]: (keyword: Keyword) => (
+    <ResponsiveTableElement children={keyword.search_volume} />
+  ),
+  [TableHeader.overall_score]: (keyword: Keyword) => (
+    <ResponsiveTableElement>
+      <ElementScore score={keyword.overall_score} />
+    </ResponsiveTableElement>
+  ),
+};
+
 export default function ResponsiveTableBody({
   trendingKeywords,
   selectedColumn,
   keywords,
 }: Props): JSX.Element {
-  const BodyColumnMapper: BodyColumn = {
-    [TableHeader.competition]: (keyword: Keyword) => (
-      <ResponsiveTableElement children={keyword.competition} />
-    ),
-    [TableHeader.search_volume]: (keyword: Keyword) => (
-      <ResponsiveTableElement children={keyword.search_volume} />
-    ),
-    [TableHeader.overall_score]: (keyword: Keyword) => (
-      <ResponsiveTableElement>
-        <ElementScore score={keyword.overall_score} />
-      </ResponsiveTableElement>
-    ),
-  };
+  const [isDesktop] = useMediaQuery("(min-width: 47em)");
+
   return (
     <Box
       w="full"
       overflowY="auto"
-      h={`calc(100vh - ${HEADER_HEIGHT}px)`}
+      h={`calc(100vh - ${
+        isDesktop ? DESKTOP_SPACE_HEIGHT : MOBILE_SPACE_HEIGHT
+      }px)`}
       scrollBehavior="smooth"
     >
       {keywords.map((keyword) => (
