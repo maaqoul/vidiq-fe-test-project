@@ -1,4 +1,4 @@
-import { Box, Center, Flex } from "@chakra-ui/react";
+import { Center, Flex } from "@chakra-ui/react";
 
 interface Props {
   score: number;

@@ -16,7 +16,7 @@ export default function ResponsiveTableElement({
       lineHeight="1rem"
       color={header ? "#7A7A7A" : "#252626"}
       flex={primary ? "3" : "1"}
-      p="3"
+      p="2"
     >
       {children}
     </Box>

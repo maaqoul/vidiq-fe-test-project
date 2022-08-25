@@ -1,4 +1,4 @@
-import { Box, Heading, Select, Flex, Show } from "@chakra-ui/react";
+import { Box, Heading, Flex } from "@chakra-ui/react";
 import React, { SyntheticEvent } from "react";
 import { TableHeader } from "../../models/Table";
 import ColumnSelector from "../ColumnSelector";
@@ -21,7 +21,7 @@ function App() {
         justifyContent="space-between"
         height="4.25rem"
       >
-        <Heading py="4" ml="4">
+        <Heading py="4" ml="2">
           List of Keywords
         </Heading>
         <ColumnSelector onChangeHandler={onChangeHandler} />

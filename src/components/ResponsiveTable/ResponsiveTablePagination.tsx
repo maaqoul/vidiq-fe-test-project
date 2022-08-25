@@ -3,20 +3,19 @@ import { Button, Flex } from "@chakra-ui/react";
 interface Props {
   keywordsPerPage: number;
   totalKeywords: number;
-  paginate: (page: number) => void;
+  onPaginate: (page: number) => void;
   pageNumber: number;
 }
+
 const ResponsiveTablePagination = ({
   keywordsPerPage,
   totalKeywords,
-  paginate,
+  onPaginate,
   pageNumber,
 }: Props): JSX.Element => {
-  const pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(totalKeywords / keywordsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const pageNumbers = [
+    ...Array(Math.ceil(totalKeywords / keywordsPerPage)),
+  ].map<number>((_, index) => index + 1);
 
   return (
     <Flex flexDirection="row" width="full" justifyContent="center">
@@ -27,7 +26,7 @@ const ResponsiveTablePagination = ({
           variant={pageNumber === number ? "solid" : "outline"}
           size="xs"
           key={number}
-          onClick={() => paginate(number)}
+          onClick={() => onPaginate(number)}
         >
           {number}
         </Button>

@@ -16,48 +16,55 @@ interface Props {
 export default function ResponsiveTable({
   selectedColumn,
 }: Props): JSX.Element {
-  const [keywords, setKeywords] = useState<Keyword[]>(() => []);
-  const [trendingKeywords, setTrendingKeywords] = useState<number[]>(() => []);
-
-  //
-  const [currentKeywords, setCurrentKeywords] = useState(2);
-
-  // Get current posts
-  const indexOfLastPost = currentKeywords * KEYWORDS_PER_PAGE;
-  const indexOfFirstPost = indexOfLastPost - KEYWORDS_PER_PAGE;
-  const currentPosts = keywords.slice(indexOfFirstPost, indexOfLastPost);
-
-  // Change page
-  const paginate = (pageNumber: any) => setCurrentKeywords(pageNumber);
+  const [keywords, setKeywords] = useState<Keyword[]>([]);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [trendingKeywords, setTrendingKeywords] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [order, setOrder] = useState("");
+  const [sortParam, setSortParam] = useState("");
 
   useEffect(() => {
     const fetchTrendingKeywords = async () => {
       const result = await getTrendingKeywords();
-      setTrendingKeywords(result);
+      setTrendingKeywords(result.data);
     };
     fetchTrendingKeywords();
   }, []);
 
   useEffect(() => {
     (async () => {
-      const result = await getKeywords();
-      setKeywords(result);
+      const result = await getKeywords({
+        page: currentPage,
+        sort: sortParam,
+        order,
+      });
+      setKeywords(result.data);
+      setTotalCount(Number(result.total_count));
     })();
-  }, []);
+  }, [currentPage, sortParam, order]);
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  // sort
+  const onSort = (sortParam: string, order: string) => {
+    setSortParam(sortParam);
+    setOrder(order);
+  };
 
   return (
     <Box h="full" overflow="hidden">
-      <ResponsiveTableHeader selectedColumn={selectedColumn} />
+      <ResponsiveTableHeader onSort={onSort} selectedColumn={selectedColumn} />
       <ResponsiveTableBody
-        keywords={currentPosts}
+        keywords={keywords}
         selectedColumn={selectedColumn}
         trendingKeywords={trendingKeywords}
       />
       <ResponsiveTablePagination
         keywordsPerPage={KEYWORDS_PER_PAGE}
-        totalKeywords={keywords.length}
-        paginate={paginate}
-        pageNumber={currentKeywords}
+        totalKeywords={totalCount}
+        onPaginate={paginate}
+        pageNumber={currentPage}
       />
     </Box>
   );

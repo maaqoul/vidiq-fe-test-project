@@ -1,13 +1,6 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  Hide,
-  Show,
-  useMediaQuery,
-} from "@chakra-ui/react";
+import { Box, Divider, Hide, Show } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import { DESKTOP_SPACE_HEIGHT, MOBILE_SPACE_HEIGHT } from "../../Constants";
+import { SPACE_HEIGHT } from "../../Constants";
 import { Keyword } from "../../models/Keyword";
 import { TableHeader } from "../../models/Table";
 import ElementScore from "./ElementScore";
@@ -46,15 +39,11 @@ export default function ResponsiveTableBody({
   selectedColumn,
   keywords,
 }: Props): JSX.Element {
-  const [isDesktop] = useMediaQuery("(min-width: 47em)");
-
   return (
     <Box
       w="full"
       overflowY="auto"
-      h={`calc(100vh - ${
-        isDesktop ? DESKTOP_SPACE_HEIGHT : MOBILE_SPACE_HEIGHT
-      }px)`}
+      h={`calc(100vh - ${SPACE_HEIGHT}px)`}
       scrollBehavior="smooth"
     >
       {keywords.map((keyword) => (
