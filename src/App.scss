@@ -1,0 +1,12 @@
+.app {
+  margin: 0 auto;
+
+  &-header {
+    display: flex;
+  }
+
+  &-header .title {
+    margin: 0;
+    padding: 0;
+  }
+}

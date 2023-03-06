@@ -1,0 +1,50 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-standard-scss", "stylelint-prettier"],
+  "plugins": ["stylelint-order", "stylelint-scss"],
+  "rules": {
+    "max-nesting-depth": [
+      2,
+      {
+        "ignore": ["pseudo-classes"]
+      }
+    ],
+    "color-no-invalid-hex": true,
+    "unit-allowed-list": [
+      [
+        "em",
+        "rem",
+        "ex",
+        "ch",
+        "%",
+        "s",
+        "vmin",
+        "vmax",
+        "vw",
+        "vh",
+        "vb",
+        "vi",
+        "deg",
+        "grad",
+        "rad",
+        "turn",
+        "dpi",
+        "dppx",
+        "dpcm",
+        "dppx",
+        "Q",
+        "pt",
+        "in",
+        "pc",
+        "pc",
+        "mm",
+        "cm"
+      ],
+      {
+        "ignoreProperties": {
+          "px": ["font", "font-size", "/^border/", "line-height"],
+          "deg": ["translate", "rotate", "/^background/"]
+        }
+      }
+    ]
+  }
+}

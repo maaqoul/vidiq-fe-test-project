@@ -1,16 +1,13 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "rootDir": "src",
     "typeRoots": ["./src/@types", "./node_modules/@types"],
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
