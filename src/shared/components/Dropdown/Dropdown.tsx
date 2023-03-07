@@ -47,7 +47,7 @@ function Dropdown<T>({ defaultOption, options, onChange }: PropsWithChildren<Dro
   return (
     <div className='dropdown-container' ref={dropdownRef}>
       <div
-        className={clsx('dropdown-btn', isOpen && 'is-open')}
+        className={clsx('btn dropdown-btn', isOpen && 'is-open')}
         onClick={toggleDropdown}
         onKeyDown={() => {}}
         role='button'
@@ -61,6 +61,7 @@ function Dropdown<T>({ defaultOption, options, onChange }: PropsWithChildren<Dro
           {options.map((option, idx) => (
             <li key={option.title} className='dropdown-list-item'>
               <div
+                className='btn'
                 onClick={() => handleOptionClick(option)}
                 onKeyDown={() => {}}
                 tabIndex={idx}

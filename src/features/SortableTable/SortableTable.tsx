@@ -8,25 +8,7 @@ import { SortButton } from '../../shared/components/SortButton';
 
 type ITableProps = {
   bodyRows: IKeyItem[];
-  // data: {
-  //   bodyRows: {
-  //     id: number;
-  //     cols: { key: string; value: ReactNode; score?: ScoreType }[];
-  //   }[];
-  //   // TODO: Just in case the functionality is scattered.
-  //   // bodyRows?: {
-  //   //   id: number;
-  //   //   cols: { key: FCol; value: string }[];
-  //   // }[];
-  // };
 };
-
-// const titleByKey = {
-//   search_volume: 'Search Volume',
-//   keyword: 'Keyword',
-//   competition: 'Competition',
-//   overall_score: 'Overall Score',
-// };
 
 export const getScoreTypeByCompetition = (competition: ECompetition) => {
   switch (competition) {
@@ -45,7 +27,7 @@ export const getScoreTypeByCompetition = (competition: ECompetition) => {
   }
 };
 
-export const Table = ({ bodyRows }: PropsWithChildren<ITableProps>) => {
+export const SortableTable = ({ bodyRows }: PropsWithChildren<ITableProps>) => {
   const onTableHeadItemClick = (
     _event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     key: IColumnConfig['key'],
