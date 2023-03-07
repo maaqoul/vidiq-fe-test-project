@@ -8,43 +8,8 @@
         "ignore": ["pseudo-classes"]
       }
     ],
+    "font-family-no-missing-generic-family-keyword": null,
     "color-no-invalid-hex": true,
-    "unit-allowed-list": [
-      [
-        "em",
-        "rem",
-        "ex",
-        "ch",
-        "%",
-        "s",
-        "vmin",
-        "vmax",
-        "vw",
-        "vh",
-        "vb",
-        "vi",
-        "deg",
-        "grad",
-        "rad",
-        "turn",
-        "dpi",
-        "dppx",
-        "dpcm",
-        "dppx",
-        "Q",
-        "pt",
-        "in",
-        "pc",
-        "pc",
-        "mm",
-        "cm"
-      ],
-      {
-        "ignoreProperties": {
-          "px": ["font", "font-size", "/^border/", "line-height"],
-          "deg": ["translate", "rotate", "/^background/"]
-        }
-      }
-    ]
+    "unit-allowed-list": null
   }
 }

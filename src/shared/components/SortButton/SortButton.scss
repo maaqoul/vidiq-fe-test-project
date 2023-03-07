@@ -1,0 +1,16 @@
+@import '../../styles/variables/index';
+
+.btn-sort {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: brand-color('light-grey-3');
+
+  &:hover {
+    color: brand-color('light-black-0');
+  }
+
+  & .icon {
+    margin-left: 0.4rem;
+  }
+}

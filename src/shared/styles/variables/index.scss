@@ -1,0 +1,66 @@
+@use 'sass:map';
+
+// All needed border radiuses
+$border-radius-sm: 0.4rem; // 4px
+$border-radius-md: 0.8rem; // 8px
+$border-radius-lg: 1.2rem; // 12px
+$border-radius-xl: 1.6rem; // 16px
+
+// Element height variables
+$top-bar-height: 3.125rem;
+$main-font: 'Lato', sans-serif;
+$brand-colors: (
+  'red': #f00,
+  'orange': #ff9b3f,
+  'yellow': #ffc71c,
+  // TODO: Request this color from the design team.
+  'light-green': #8fe04e,
+  'green': #8fe04e,
+  'white': #fff,
+  'black': #000,
+  'light-black-0': #252626,
+  'light-grey-0': #f5f5f5,
+  'light-grey-1': #e8e8e8,
+  'light-grey-2': #f0f0f0,
+  'light-grey-3': #7a7a7a,
+);
+
+// Proper way to get theme-colors in SCSS.
+@function brand-color($key: 'primary') {
+  @return map-get($brand-colors, $key);
+}
+
+// Define themes
+$brand-themes: (
+  'dark': (
+    'base': (
+      'bg': brand-color('light-grey-0'),
+      'table': brand-color('black'),
+      'text': brand-color('white'),
+      'border': brand-color('light-grey-1'),
+    ),
+    'primary': (
+      'bg': brand-color('light-grey-0'),
+      'table': brand-color('black'),
+      'text': brand-color('white'),
+      'border': brand-color('light-grey-1'),
+    ),
+  ),
+  'light': (
+    'base': (
+      'bg': brand-color('light-grey-0'),
+      'table': brand-color('white'),
+      'text': brand-color('light-black-0'),
+      'border': brand-color('light-grey-1'),
+    ),
+    'primary': (
+      'bg': brand-color('light-grey-0'),
+      'table': brand-color('white'),
+      'text': brand-color('light-black-0'),
+      'border': brand-color('light-grey-1'),
+    ),
+  ),
+);
+
+// Names of defined themes.
+$brand-theme-names: map.keys($brand-themes);

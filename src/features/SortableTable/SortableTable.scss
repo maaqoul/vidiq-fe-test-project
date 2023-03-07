@@ -1,0 +1,114 @@
+@import '../../shared/styles/variables/index';
+
+.table-container {
+  // TODO: Should be equal 56.4rem; by design layout, but some bugs in the Chrome.
+  max-height: 58rem;
+
+  // TODO: FIX ME -> it's a not critical bug with browser scrollbar
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  position: relative;
+  z-index: 0;
+}
+
+.table-head {
+  box-shadow: 0 6px 12px rgb(0 0 0 / 8%);
+  background-color: brand-color('white');
+  position: sticky;
+  top: 0;
+  height: 5.8rem;
+}
+
+.table-head-col,
+.table-body-col {
+  position: relative;
+}
+
+.table-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &::before {
+    content: '&nbsp;';
+    visibility: hidden;
+  }
+}
+
+// styles of size rows, cols
+.table-head-col {
+  min-width: 15.8rem;
+  width: 14.65%;
+
+  &:first-child {
+    width: 52.916%;
+  }
+
+  &:nth-of-type(3) {
+    min-width: 8.5rem;
+  }
+
+  &:last-child {
+    width: 17.8%;
+    min-width: 8.5rem;
+  }
+}
+
+.table-head-col:first-child,
+.table-body-col:first-child {
+  padding-left: 1.6rem;
+}
+
+.table-head-col:last-child,
+.table-body-col:last-child {
+  padding-right: 1.6rem;
+}
+
+.table-head,
+.table-body {
+  &-row::after {
+    display: block;
+    content: ' ';
+    height: 1px;
+    background-color: #f0f0f0;
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+// NOTE: some tricky for adding border-bottom
+.table-head-row::after {
+  left: 0;
+  right: 0;
+}
+
+.table-body {
+  position: relative;
+  z-index: -1;
+
+  &-row &-col:nth-of-type(3) {
+    text-transform: capitalize;
+  }
+
+  &-row {
+    height: 4.7rem;
+    position: relative;
+  }
+
+  &-row::after {
+    width: calc(100% - 3.2rem);
+    left: 1.6rem;
+  }
+
+  &-row:last-child::after {
+    display: none;
+  }
+}

@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.6rem 1.6rem 0;
+
+  &-title {
+    font: normal 700 1.8rem Inter;
+    line-height: 2.2rem;
+    margin: 0;
+  }
+}
+
+.header .dropdown {
+  display: none;
+}
+
+// @media only screen and (max-width: 1079px) {
+// }
+
+@media only screen and (max-width: 768px) {
+  .header .dropdown {
+    display: block;
+  }
+}

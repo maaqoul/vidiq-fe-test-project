@@ -1,0 +1,72 @@
+@import '../../styles/variables/index';
+
+.dropdown {
+  &-container {
+    width: 15.6rem;
+    position: relative;
+    height: 3.6rem;
+  }
+
+  &-btn,
+  &-list {
+    font: normal 500 1.4rem Inter;
+  }
+
+  &-btn {
+    font: normal 500 1.4rem Inter;
+    line-height: 1.8rem;
+    width: 100%;
+    height: 100%;
+    color: brand-color('light-black-0');
+    background: brand-color('white');
+    border: 1px solid brand-color('light-grey-1');
+    border-radius: 10rem;
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    cursor: pointer;
+
+    .icon {
+      padding-left: 0.5rem;
+    }
+
+    &.is-open .icon {
+      transform: rotate(180deg);
+      padding-left: 0;
+      padding-right: 0.5rem;
+    }
+
+    &-label {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  &-list {
+    position: absolute;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    width: 100%;
+    top: 100%;
+    list-style: none;
+    background: brand-color('white');
+    border: 1px solid brand-color('light-grey-1');
+    border-radius: 0.4rem;
+
+    &-item {
+      height: 2.6rem;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: brand-color('light-grey-0');
+      }
+
+      &:not(:first-child) {
+        border-top: 1px solid brand-color('light-grey-1');
+      }
+    }
+  }
+}
