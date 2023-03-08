@@ -5,3 +5,14 @@ declare module '*.svg' {
   const src: string;
   export default src;
 }
+
+declare global {
+  interface WindowEventMap {
+    'local-storage': CustomEvent;
+  }
+}
+
+declare const window: Window &
+  typeof globalThis & {
+    env: unknown;
+  };

@@ -1,4 +1,4 @@
-import './CustomButton.scss';
+import './Button.scss';
 
 import clsx from 'clsx';
 import React, {
@@ -11,7 +11,7 @@ import React, {
   TouchEvent,
 } from 'react';
 
-export interface CustomButtonProps
+export interface ButtonProps
   extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLDivElement>, HTMLDivElement>,
     React.AriaAttributes {
   // title?: string;
@@ -19,7 +19,7 @@ export interface CustomButtonProps
   disabled?: boolean;
 }
 
-export const CustomButton: FC<CustomButtonProps> = ({
+export const Button: FC<ButtonProps> = ({
   disabled,
   className,
   onClick,

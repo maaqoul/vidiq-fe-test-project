@@ -1,5 +1,5 @@
 import { KeywordsTable } from './components/KeywordsTable';
 
-export const TablePage = () => {
-  return <KeywordsTable />;
-};
+const TablePage = () => <KeywordsTable />;
+
+export default TablePage;

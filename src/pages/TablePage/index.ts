@@ -1,1 +1,1 @@
-export * from './TablePage';
+export { default as TablePage } from './TablePage';

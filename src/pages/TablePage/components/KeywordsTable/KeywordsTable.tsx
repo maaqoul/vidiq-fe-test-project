@@ -1,19 +1,30 @@
 import './KeywordsTable.scss';
 
-import { useState } from 'react';
+import {
+  DEFAULT_PAGINATION_PAGE,
+  DEFAULT_ROWS_LIMIT,
+  SELECTED_PAGINATION_PAGE_LOCAL_STORAGE_KEY,
+} from '../../../../entities/Keywords';
 import { PageHeader } from '../../../../features/PageHeader';
 import { SortableTable } from '../../../../features/SortableTable';
 import { Pagination } from '../../../../shared/components/Pagination';
-import { useMobileCheck } from '../../../../shared/hooks';
+import { useLocalStorage, useMobileCheck } from '../../../../shared/hooks';
+import { getSlicedArray } from '../../../../shared/utils/array';
 import { keywordsApi } from '../../../../store';
-import { DEFAULT_ROWS_LIMIT } from './const';
 
 export const KeywordsTable = () => {
   // TODO: Implement the use of a limit for payload data,
   // but we need to know the total number of items in the list
   // DEFAULT_LIMIT_ROWS
   const { data, isLoading } = keywordsApi.useGetKeywordsQuery();
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const totalItems = data?.length ?? 0;
+  const totalPages = totalItems > 0 ? Math.ceil(totalItems / DEFAULT_ROWS_LIMIT) : 0;
+  const [storedValue, setStorageValue] = useLocalStorage(
+    SELECTED_PAGINATION_PAGE_LOCAL_STORAGE_KEY,
+    DEFAULT_PAGINATION_PAGE,
+  );
+  const currentPage =
+    storedValue > 0 && storedValue <= totalPages ? storedValue : DEFAULT_PAGINATION_PAGE;
   const isMobile = useMobileCheck();
 
   if (isLoading) return <>Loading...</>;
@@ -24,13 +35,8 @@ export const KeywordsTable = () => {
       <main className='wrapper'>
         <div className='main'>
           <SortableTable
-            // TODO: Move this logic into Redux store
-            bodyRows={data.slice(
-              currentPage > 1 ? (currentPage - 1) * DEFAULT_ROWS_LIMIT : 0,
-              currentPage > 1
-                ? currentPage * DEFAULT_ROWS_LIMIT + 1
-                : currentPage * DEFAULT_ROWS_LIMIT,
-            )}
+            bodyRows={getSlicedArray(data, currentPage, DEFAULT_ROWS_LIMIT)}
+            isMobile={isMobile}
           />
         </div>
       </main>
@@ -38,9 +44,9 @@ export const KeywordsTable = () => {
         <Pagination
           currentPage={currentPage}
           itemsPerPage={DEFAULT_ROWS_LIMIT}
-          totalItems={data.length}
+          totalItems={totalItems}
           onChangePage={(newPage: number) => {
-            setCurrentPage(newPage);
+            setStorageValue(newPage);
           }}
         />
       </footer>
