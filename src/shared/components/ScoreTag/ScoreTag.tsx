@@ -2,11 +2,11 @@ import './ScoreTag.scss';
 
 import clsx from 'clsx';
 import { FC } from 'react';
-import { ScoreTagType } from '../../types';
+import { IScoreTagType } from '../../types';
 
 type ScoreTagProps = {
   score: number;
-  type: ScoreTagType;
+  type: IScoreTagType;
 };
 
 const ScoreTag: FC<ScoreTagProps> = ({ score, type }) => {

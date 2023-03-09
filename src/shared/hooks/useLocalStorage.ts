@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getParsedJSON } from '../utils';
 
-type SetValue<T> = (value: T) => void;
+type ISetValue<T> = (value: T) => void;
 
-export const useLocalStorage = <T>(storageKey: string, initialValue: T): [T, SetValue<T>] => {
+export const useLocalStorage = <T>(storageKey: string, initialValue: T): [T, ISetValue<T>] => {
   // Get from local storage then
   // parse stored json or return initialValue
   const readValue = useCallback((): T => {
@@ -27,7 +27,7 @@ export const useLocalStorage = <T>(storageKey: string, initialValue: T): [T, Set
 
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
-  const setValue: SetValue<T> = (value: T) => {
+  const setValue: ISetValue<T> = (value: T) => {
     // Prevent build error "window is undefined" but keeps working
     if (typeof window === 'undefined') {
       console.warn(

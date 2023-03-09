@@ -22,12 +22,14 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
+    "@types/react-router-dom": "^5.3.3",
     "clsx": "^1.2.1",
     "compose-function": "^3.0.3",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.8.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",

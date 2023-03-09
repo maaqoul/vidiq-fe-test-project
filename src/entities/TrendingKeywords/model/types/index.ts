@@ -1,1 +1,1 @@
-export type ITrendingKeywords = number[];
+export type ITrendingKeywordsIds = number[];

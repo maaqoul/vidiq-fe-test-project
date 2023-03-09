@@ -1,7 +1,6 @@
-// TODO: Based on the layout, it is necessary to be oriented by the competition field
-
 import { ECompetition } from '../../../entities/Keywords';
 
+// TODO: Based on the layout, it is necessary to be oriented by the competition field
 // TODO: It is necessary to clarify the boundaries and processing rules for the field overall_score!
 export const getScoreTypeByCompetition = (competition: ECompetition) => {
   switch (competition) {

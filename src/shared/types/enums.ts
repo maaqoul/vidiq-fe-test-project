@@ -1,4 +1,4 @@
-export enum EnvPropEnum {
+export enum EProcessEnv {
   PROTOCOL = 'PROTOCOL',
   BASE_URL = 'BASE_URL',
   API_REQUEST_KEYWORDS_URI = 'API_REQUEST_KEYWORDS_URI',

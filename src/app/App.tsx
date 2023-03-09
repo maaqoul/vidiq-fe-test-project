@@ -1,20 +1,14 @@
 import './styles/App.scss';
 
-import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
 import Pages from '../pages';
-import { keywordsApi } from '../store';
-import { ErrorBoundary } from './providers/ErrorBoundary';
+import withProviders from './providers';
 
 const App = () => {
   return (
-    <ErrorBoundary>
-      <ApiProvider api={keywordsApi}>
-        <div className='app'>
-          <Pages />
-        </div>
-      </ApiProvider>
-    </ErrorBoundary>
+    <div className='app'>
+      <Pages />
+    </div>
   );
 };
 
-export default App;
+export default withProviders(App);

@@ -1,38 +1,38 @@
-import { EColumnKey, IColumnConfig, KeywordByKeyMap } from '../model/types';
+import { EColumnIndexKey, EKeywordKeys, IColumnConfig, IKeywordByKeyMap } from '../model/types';
 
 const KEYWORDS_COLUMNS: IColumnConfig[] = [
-  { title: 'Keywords', key: 'keyword' },
-  { title: 'Search volume', key: 'search_volume' },
-  { title: 'Competition', key: 'competition' },
-  { title: 'Overall Score', key: 'overall_score' },
+  { title: 'Keywords', key: EKeywordKeys.KEYWORD },
+  { title: 'Search volume', key: EKeywordKeys.SEARCH_VOLUME },
+  { title: 'Competition', key: EKeywordKeys.COMPETITION },
+  { title: 'Overall Score', key: EKeywordKeys.OVERALL_SCORE },
 ];
 const DEFAULT_ROWS_LIMIT = 24;
-const DEFAULT_MOBILE_TABLE_SELECT_OPTION_INDEX = 0; // start head col index on mobile devices
-const FILTRED_OPTION_INDEX = 1;
-const MOBILE_TABLE_SELECT_OPTIONS = KEYWORDS_COLUMNS.slice(FILTRED_OPTION_INDEX);
+const MOBILE_TABLE_SELECT_OPTIONS = KEYWORDS_COLUMNS.slice(EColumnIndexKey.SEARCH_VOLUME);
 const DEFAULT_PAGINATION_PAGE = 1;
 
-const KEYWORD_INDEX_BY_KEY = KEYWORDS_COLUMNS.reduce<KeywordByKeyMap>(
+const KEYWORD_INDEX_BY_KEY = KEYWORDS_COLUMNS.reduce<IKeywordByKeyMap>(
   (acc, keyword: IColumnConfig, index) => {
     if (!acc[keyword.key]) acc[keyword.key] = index;
     return acc;
   },
-  {} as KeywordByKeyMap,
+  {} as IKeywordByKeyMap,
 );
-const DEFAULT_OPTION = KEYWORDS_COLUMNS[EColumnKey.SEARCH_VOLUME];
+const DEFAULT_OPTION = KEYWORDS_COLUMNS[EColumnIndexKey.SEARCH_VOLUME];
 // Local Storage keys
 const MOBILE_TABLE_SELECTED_COLUMN_LOCAL_STORAGE_KEY = 'MOBILE_TABLE_SELECTED_COLUMN';
 const SELECTED_PAGINATION_PAGE_LOCAL_STORAGE_KEY = 'SELECTED_PAGINATION_PAGE';
+const SORT_ORDER_BY_LOCAL_STORAGE_KEY = 'SORT_ORDER_BY';
+const SORT_ORDER_FIELD_NAME_LOCAL_STORAGE_KEY = 'SORT_ORDER_FIELD_NAME';
 
 export {
-  DEFAULT_MOBILE_TABLE_SELECT_OPTION_INDEX,
   DEFAULT_OPTION,
   DEFAULT_PAGINATION_PAGE,
   DEFAULT_ROWS_LIMIT,
-  FILTRED_OPTION_INDEX,
   KEYWORD_INDEX_BY_KEY,
   KEYWORDS_COLUMNS,
   MOBILE_TABLE_SELECT_OPTIONS,
   MOBILE_TABLE_SELECTED_COLUMN_LOCAL_STORAGE_KEY,
   SELECTED_PAGINATION_PAGE_LOCAL_STORAGE_KEY,
+  SORT_ORDER_BY_LOCAL_STORAGE_KEY,
+  SORT_ORDER_FIELD_NAME_LOCAL_STORAGE_KEY,
 };

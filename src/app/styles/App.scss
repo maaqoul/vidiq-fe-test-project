@@ -22,6 +22,9 @@
 .app {
   width: 100%;
   height: 100vh;
+
+  // optional style, removes the white background when the DevTools is open
+  min-height: 68rem;
   display: block;
   margin: 0 auto;
   background-color: brand-color('light-grey-1');

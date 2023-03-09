@@ -1,5 +1,5 @@
-import { EnvPropEnum } from './enums';
+import { EProcessEnv } from './enums';
 
 export type IProcessEnv = {
-  [key in EnvPropEnum]: string;
+  [key in EProcessEnv]: string;
 } & typeof window;

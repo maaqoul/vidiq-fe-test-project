@@ -5,11 +5,9 @@ import { FC } from 'react';
 
 type SpinnerProps = {
   size: 'small' | 'medium' | 'large';
-  classNames: string;
+  classNames?: string;
 };
 
-const Spinner: FC<SpinnerProps> = ({ size = 'medium', classNames }) => (
+export const Spinner: FC<SpinnerProps> = ({ size = 'medium', classNames }) => (
   <div className={clsx('loader', size, classNames)} />
 );
-
-export default Spinner;

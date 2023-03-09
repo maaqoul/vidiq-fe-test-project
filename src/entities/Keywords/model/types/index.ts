@@ -5,15 +5,27 @@ export enum ECompetition {
   HIGH = 'high',
   VERY_HIGH = 'very high',
 }
+export enum ESortOrderBy {
+  ASC = 'asc',
+  DESC = 'desc',
+}
 
-export enum EColumnKey {
+export enum EColumnIndexKey {
   KEYWORD,
   SEARCH_VOLUME,
   COMPETITION,
   OVERALL_SCORE,
 }
 
-export type IKeyItem = {
+export enum EKeywordKeys {
+  ID = 'id',
+  KEYWORD = 'keyword',
+  SEARCH_VOLUME = 'search_volume',
+  COMPETITION = 'competition',
+  OVERALL_SCORE = 'overall_score',
+}
+
+export type IKeywordItem = {
   id: number;
   keyword: string;
   search_volume: number;
@@ -21,11 +33,12 @@ export type IKeyItem = {
   overall_score: number;
 };
 
+export type IKeywordKeys = keyof IKeywordItem;
 export interface IColumnConfig {
   title: string;
-  key: keyof IKeyItem;
+  key: EKeywordKeys;
 }
 
-export type KeywordByKeyMap = {
-  [key in IColumnConfig['key']]: number;
+export type IKeywordByKeyMap = {
+  [key in EKeywordKeys]: number;
 };
