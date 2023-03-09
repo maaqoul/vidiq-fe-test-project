@@ -24,6 +24,8 @@
     background-color: brand-color('yellow');
   }
 
+  // TODO: Request color for the "High" score
+  &.light-green,
   &.green {
     background-color: brand-color('green');
   }

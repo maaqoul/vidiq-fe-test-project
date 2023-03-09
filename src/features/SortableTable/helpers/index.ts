@@ -9,7 +9,7 @@ export const getScoreTypeByCompetition = (competition: ECompetition) => {
     case ECompetition.MEDIUM:
       return 'yellow';
     case ECompetition.HIGH:
-      return 'light green';
+      return 'light-green';
     case ECompetition.VERY_HIGH:
       return 'green';
     case ECompetition.VERY_LOW:
