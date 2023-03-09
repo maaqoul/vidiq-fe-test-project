@@ -70,11 +70,11 @@ export const SortableTable = memo(
             );
           }
           case EColumnIndexKey.COMPETITION: {
-            return <td className='table-body-col'>{col.competition}</td>;
+            return <td className='table-body-col text-capitalize'>{col.competition}</td>;
           }
           case EColumnIndexKey.OVERALL_SCORE: {
             return (
-              <td className='table-body-col text-capitalize'>
+              <td className='table-body-col'>
                 <ScoreTag
                   score={col.overall_score}
                   type={getScoreTypeByCompetition(col.competition)}
@@ -119,7 +119,7 @@ export const SortableTable = memo(
                         {col.search_volume}
                       </div>
                     </td>
-                    <td className='table-body-col'>{col.competition}</td>
+                    <td className='table-body-col text-capitalize'>{col.competition}</td>
                     <td className='table-body-col'>
                       <ScoreTag
                         score={col.overall_score}
