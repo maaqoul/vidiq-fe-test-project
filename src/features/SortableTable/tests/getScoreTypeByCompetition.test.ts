@@ -10,8 +10,8 @@ describe('getScoreTypeByCompetition', () => {
     expect(getScoreTypeByCompetition(ECompetition.MEDIUM)).toEqual('yellow');
   });
 
-  it('should return "light green" for HIGH competition', () => {
-    expect(getScoreTypeByCompetition(ECompetition.HIGH)).toEqual('light green');
+  it('should return "light-green" for HIGH competition', () => {
+    expect(getScoreTypeByCompetition(ECompetition.HIGH)).toEqual('light-green');
   });
 
   it('should return "green" for VERY_HIGH competition', () => {
