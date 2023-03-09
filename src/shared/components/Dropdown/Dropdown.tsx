@@ -2,6 +2,7 @@ import './Dropdown.scss';
 
 import clsx from 'clsx';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { Button } from '../Button/Button';
 import ChevronDownIcon from '../icons/ChevronDownIcon';
 
 type DropdownProps<T> = {
@@ -46,29 +47,29 @@ function Dropdown<T>({ defaultOption, options, onChange }: PropsWithChildren<Dro
 
   return (
     <div className='dropdown-container' ref={dropdownRef}>
-      <div
-        className={clsx('btn dropdown-btn', isOpen && 'is-open')}
+      <Button
+        className={clsx('dropdown-btn', isOpen && 'is-open')}
         onClick={toggleDropdown}
+        // TODO: Implement onKeyDown acessability
         onKeyDown={() => {}}
         role='button'
-        tabIndex={-1}
       >
         <div className='dropdown-btn-label'>{selectedOption.title || 'Select an option'}</div>
         <ChevronDownIcon />
-      </div>
+      </Button>
       {isOpen && (
         <ul className='dropdown-list'>
           {options.map((option, idx) => (
             <li key={option.title} className='dropdown-list-item'>
-              <div
-                className='btn'
+              <Button
                 onClick={() => handleOptionClick(option)}
+                // TODO: Implement onKeyDown acessability
                 onKeyDown={() => {}}
-                tabIndex={idx}
+                tabIndex={idx + 1}
                 role='button'
               >
                 {option.title}
-              </div>
+              </Button>
             </li>
           ))}
         </ul>

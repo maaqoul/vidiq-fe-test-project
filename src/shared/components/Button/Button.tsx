@@ -25,6 +25,7 @@ export const Button: FC<ButtonProps> = ({
   onClick,
   onKeyDown,
   children,
+  tabIndex,
   ...props
 }) => {
   const handleClick = (
@@ -48,7 +49,7 @@ export const Button: FC<ButtonProps> = ({
       className={clsx('btn', className, disabled && 'is-disabled')}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      tabIndex={disabled ? -1 : 0}
+      tabIndex={disabled ? -1 : tabIndex ?? 0}
       role='button'
     >
       {children}
