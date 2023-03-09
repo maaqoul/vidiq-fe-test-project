@@ -38,8 +38,8 @@
     "react-app/jest",
     "airbnb",
     "airbnb-typescript",
-    "plugin:prettier/recommended", // Make sure this is always the last element in the array.
-    "prettier"
+    "prettier",
+    "plugin:prettier/recommended" // Make sure this is always the last element in the array.
   ],
   "plugins": [
     "react",
