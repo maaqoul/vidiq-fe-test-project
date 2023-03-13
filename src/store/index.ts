@@ -1,3 +1,3 @@
-export * from './keywordsApi';
+export * from './hooks';
 export * from './store';
-export * from './store.types';
+export * from './types';

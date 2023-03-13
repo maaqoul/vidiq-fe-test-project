@@ -11,6 +11,8 @@ export const useMobileCheck = (breakpoint = MIN_SCREEN_SIZE): boolean => {
     if (isBrowser) {
       window.addEventListener('resize', onWindowSizeChange);
       window.addEventListener('orientationchange', onWindowSizeChange);
+    } else {
+      throw new Error('At the moment, only the browser is supported.');
     }
     return () => {
       if (isBrowser) {

@@ -1,9 +1,12 @@
+import { DEFAULT_MOBILE_TABLE_DROPDOWN_OPTION, KEYWORDS_COLUMNS_CONFIG } from '../../const';
 import {
+  EColumnIndexKey,
   ECompetition,
   EKeywordKeys,
   ESortOrderBy,
-  IKeywordItem,
-} from '../../../../../entities/Keywords';
+  IColumnConfig,
+  type IKeywordItem,
+} from '../types';
 
 export function getSortedKeywordsByOrder({
   keywords = [],
@@ -62,3 +65,12 @@ export function getSortedKeywordsByOrder({
     }
   });
 }
+
+export const getDefaultOptionBySelectedColumnIndex = (
+  selectedColumnIndex: EColumnIndexKey,
+): IColumnConfig =>
+  selectedColumnIndex != null &&
+  selectedColumnIndex !== EColumnIndexKey.KEYWORD &&
+  selectedColumnIndex <= KEYWORDS_COLUMNS_CONFIG.length
+    ? KEYWORDS_COLUMNS_CONFIG[selectedColumnIndex]
+    : DEFAULT_MOBILE_TABLE_DROPDOWN_OPTION;

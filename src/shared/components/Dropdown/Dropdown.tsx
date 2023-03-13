@@ -1,9 +1,9 @@
 import './Dropdown.scss';
 
-import clsx from 'clsx';
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { clsx } from 'clsx';
+import { useEffect, useRef, useState, type PropsWithChildren } from 'react';
 import { Button } from '../Button/Button';
-import ChevronDownIcon from '../icons/ChevronDownIcon';
+import { ChevronDownIcon } from '../icons';
 
 type DropdownProps<T> = {
   defaultOption: {

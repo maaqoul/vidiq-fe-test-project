@@ -1,8 +1,8 @@
-import { Suspense } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Spinner } from '../../shared/components/Spinner';
 
-const withRouter = (component: () => React.ReactNode) => () =>
+const withRouter = (component: () => ReactNode) => () =>
   (
     <BrowserRouter>
       <Suspense fallback={<Spinner size='large' />}>{component()}</Suspense>

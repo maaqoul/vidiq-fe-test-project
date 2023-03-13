@@ -1,5 +1,6 @@
-import { KeywordsTable } from './components/KeywordsTable';
+import { type FC } from 'react';
+import { Keywords } from './components/Keywords/KeywordsRedux';
 
-const TablePage = () => <KeywordsTable />;
+const TablePage: FC = () => <Keywords />;
 
 export default TablePage;

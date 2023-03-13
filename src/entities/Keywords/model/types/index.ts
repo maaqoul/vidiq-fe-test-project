@@ -5,6 +5,7 @@ export enum ECompetition {
   HIGH = 'high',
   VERY_HIGH = 'very high',
 }
+
 export enum ESortOrderBy {
   ASC = 'asc',
   DESC = 'desc',
@@ -25,7 +26,7 @@ export enum EKeywordKeys {
   OVERALL_SCORE = 'overall_score',
 }
 
-export type IKeywordItem = {
+type IKeywordItem = {
   id: number;
   keyword: string;
   search_volume: number;
@@ -33,12 +34,25 @@ export type IKeywordItem = {
   overall_score: number;
 };
 
-export type IKeywordKeys = keyof IKeywordItem;
-export interface IColumnConfig {
+type IKeywordKeys = keyof IKeywordItem;
+
+interface IColumnConfig {
   title: string;
   key: EKeywordKeys;
 }
 
-export type IKeywordByKeyMap = {
+type IKeywordKeyByIndex = {
   [key in EKeywordKeys]: number;
 };
+
+interface IKeywordsState {
+  isLoadingKeywords: boolean;
+  isLoadingErrorKeywords: boolean;
+  selectedPageNumber: number;
+  selectedColumnIndex: EColumnIndexKey;
+  selectedFieldName: EKeywordKeys; // Note: You can use Omit<EKeywordKeys, 'id'> type, but it will complicate the logic.
+  sortOrderBy: ESortOrderBy;
+  rowsLimitPerPage: number;
+}
+
+export type { IColumnConfig, IKeywordItem, IKeywordKeyByIndex, IKeywordKeys, IKeywordsState };

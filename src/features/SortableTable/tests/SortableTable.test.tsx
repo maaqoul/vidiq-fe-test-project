@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { ECompetition } from '../../../entities/Keywords';
-
 import { SortableTable } from '../SortableTable';
 
 describe('SortableTable', () => {
@@ -36,7 +35,10 @@ describe('SortableTable', () => {
       },
     ],
     selectedColumnIndex: 1,
-    trendingKeywordsIds: [1, 3],
+    trendingKeywordsById: {
+      1: true,
+      3: true,
+    },
     isMobile: false,
     onSortButtonClick: jest.fn(),
   };

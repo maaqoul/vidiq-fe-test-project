@@ -1,18 +1,18 @@
 import './Pagination.scss';
 
-import clsx from 'clsx';
-import { FC, useEffect, useState } from 'react';
+import { clsx } from 'clsx';
+import { useEffect, useState, type FC } from 'react';
 import { Button } from '../Button/Button';
 
-export interface PaginationProps {
+interface PaginationProps {
   totalItems: number; // total number of items to be paginated
   itemsPerPage: number; // number of items to be displayed per page
-  currentPage: number; // current active page
+  currentPageNumber: number; // current active page
   onChangePage: (newPage: number) => void; // function to be called when a page is clicked
 }
 // TODO: Implement a version for mobile devices with a limit of displayed elements "...".
 export const Pagination: FC<PaginationProps> = ({
-  currentPage,
+  currentPageNumber,
   totalItems,
   itemsPerPage,
   onChangePage,
@@ -31,7 +31,7 @@ export const Pagination: FC<PaginationProps> = ({
   }, [numPages]);
 
   const handlePageClick = (page: number) => {
-    if (page !== currentPage) {
+    if (page !== currentPageNumber) {
       onChangePage(page);
     }
   };
@@ -40,8 +40,8 @@ export const Pagination: FC<PaginationProps> = ({
     <div className='pagination-container'>
       <Button
         className={clsx('pagination-button prev')}
-        onClick={() => handlePageClick(currentPage - 1)}
-        disabled={currentPage === 1}
+        onClick={() => handlePageClick(currentPageNumber - 1)}
+        disabled={currentPageNumber === 1}
         // TODO: Implement onKeyDown acessability
         onKeyDown={() => {}}
         tabIndex={0}
@@ -52,7 +52,7 @@ export const Pagination: FC<PaginationProps> = ({
       {pages.map((page, idx) => (
         <Button
           key={page}
-          className={clsx('pagination-button', currentPage === page && 'active')}
+          className={clsx('pagination-button', currentPageNumber === page && 'active')}
           onClick={() => handlePageClick(page)}
           // TODO: Implement onKeyDown acessability
           onKeyDown={() => {}}
@@ -64,8 +64,8 @@ export const Pagination: FC<PaginationProps> = ({
       ))}
       <Button
         className='pagination-button next'
-        onClick={() => handlePageClick(currentPage + 1)}
-        disabled={currentPage === numPages}
+        onClick={() => handlePageClick(currentPageNumber + 1)}
+        disabled={currentPageNumber === numPages}
         // TODO: Implement onKeyDown acessability
         onKeyDown={() => {}}
         tabIndex={pages.length + 1}

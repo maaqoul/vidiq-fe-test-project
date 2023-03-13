@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { FC } from 'react';
-import { IconBaseProps } from './icons.types';
+import type { IconBaseProps } from './types';
 
 const ChevronDownIcon: FC<IconBaseProps> = ({ fill = '#252626', className, ...otherProps }) => {
   return (

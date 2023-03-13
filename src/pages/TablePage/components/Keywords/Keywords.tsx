@@ -1,41 +1,49 @@
-import './KeywordsTable.scss';
+import './Keywords.scss';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import {
   DEFAULT_PAGINATION_PAGE,
   DEFAULT_ROWS_LIMIT,
   EColumnIndexKey,
   EKeywordKeys,
   ESortOrderBy,
-  IKeywordItem,
+  KEYWORD_INDEX_BY_KEY,
   MOBILE_TABLE_SELECTED_COLUMN_LOCAL_STORAGE_KEY,
   SELECTED_PAGINATION_PAGE_LOCAL_STORAGE_KEY,
+  setSortOrder,
   SORT_ORDER_BY_LOCAL_STORAGE_KEY,
   SORT_ORDER_FIELD_NAME_LOCAL_STORAGE_KEY,
+  useGetKeywordsQuery,
+  type IKeywordItem,
 } from '../../../../entities/Keywords';
+import { getSortedKeywordsByOrder } from '../../../../entities/Keywords/model/helpers';
+import {
+  ITrendingKeywordsIdsMap,
+  useGetAllTrendingKeywordsIdsQuery,
+} from '../../../../entities/TrendingKeywords';
 import { PageHeader } from '../../../../features/PageHeader';
 import { SortableTable } from '../../../../features/SortableTable';
 import { Pagination } from '../../../../shared/components/Pagination';
 import { useLocalStorage, useMobileCheck } from '../../../../shared/hooks';
 import { getSlicedArray } from '../../../../shared/utils';
-import { keywordsApi } from '../../../../store';
-import { getSortedKeywordsByOrder } from './helpers';
+import { useAppDispatch } from '../../../../store';
 
-export const KeywordsTable = () => {
+export const Keywords: FC = () => {
+  const dispatch = useAppDispatch();
   // TODO: Implement the use of a limit for payload data,
   // but we need to know the total number of items in the list
   // DEFAULT_LIMIT_ROWS
   const {
-    data: keywords,
+    data: keywords = [],
     isLoading: isLoadingKeywords,
     isError: isKeywordsLoadingError,
-  } = keywordsApi.useGetKeywordsQuery();
+  } = useGetKeywordsQuery();
   const {
-    data: trendingKeywordsIds,
+    data: trendingKeywordsIds = [],
     isLoading: isLoadingTrendingKeywordsIds,
     isError: isErrorLoadingTrendingKeywordsIds,
-  } = keywordsApi.useGetAllTrendingKeywordsIdsQuery();
-  // TODO: I believe in real application we should move all logic like this into the Store.
+  } = useGetAllTrendingKeywordsIdsQuery();
+  // TODO: I believe in real application we should move all logic like this into the Store/selector.
   const totalItems = keywords?.length ?? 0;
   const totalPages = totalItems > 0 ? Math.ceil(totalItems / DEFAULT_ROWS_LIMIT) : 0;
   const isMobile = useMobileCheck();
@@ -88,8 +96,12 @@ export const KeywordsTable = () => {
     <div className='container'>
       <PageHeader
         isMobile={isMobile}
-        storedSelectedColumnIndex={storedSelectedColumnIndex}
-        onSelectedColumnIndexChange={setStoredSelectedColumnIndex}
+        selectedColumnIndex={storedSelectedColumnIndex}
+        onSelectedColumnIndexChange={(option) => {
+          const selectedColumnIndexByKey = KEYWORD_INDEX_BY_KEY[option.key];
+          if (storedSelectedColumnIndex !== selectedColumnIndexByKey)
+            setStoredSelectedColumnIndex(selectedColumnIndexByKey);
+        }}
       />
       <main className='wrapper'>
         <div className='main'>
@@ -101,19 +113,28 @@ export const KeywordsTable = () => {
             }
             isMobile={isMobile}
             selectedColumnIndex={storedSelectedColumnIndex}
-            trendingKeywordsIds={trendingKeywordsIds ?? []}
-            onSortButtonClick={(fieldName) => {
-              setStoredFieldName(fieldName);
-              setStoredSortBy(
-                storedSortBy === ESortOrderBy.ASC ? ESortOrderBy.DESC : ESortOrderBy.ASC,
+            trendingKeywordsById={trendingKeywordsIds.reduce((acc, item) => {
+              if (!acc[item]) acc[item] = true;
+              return acc;
+            }, {} as ITrendingKeywordsIdsMap)}
+            onSortButtonClick={(selectedFieldName) => {
+              setStoredFieldName(selectedFieldName);
+              const sortOrderBy =
+                storedSortBy === ESortOrderBy.ASC ? ESortOrderBy.DESC : ESortOrderBy.ASC;
+              dispatch(
+                setSortOrder({
+                  selectedFieldName,
+                  sortOrderBy,
+                }),
               );
+              setStoredSortBy(sortOrderBy);
             }}
           />
         </div>
       </main>
       <footer>
         <Pagination
-          currentPage={currentPage}
+          currentPageNumber={currentPage}
           itemsPerPage={DEFAULT_ROWS_LIMIT}
           totalItems={totalItems}
           onChangePage={(newPage: number) => {

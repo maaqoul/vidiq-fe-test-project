@@ -1,7 +1,7 @@
 import './SortButton.scss';
 
-import clsx from 'clsx';
-import { FC, ReactElement } from 'react';
+import { clsx } from 'clsx';
+import type { FC, ReactElement } from 'react';
 import { Button, ButtonProps } from '../Button';
 import SortIcon from '../icons/SortIcon';
 

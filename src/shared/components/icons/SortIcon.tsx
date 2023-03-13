@@ -1,6 +1,6 @@
-import clsx from 'clsx';
-import { FC } from 'react';
-import { IconBaseProps } from './icons.types';
+import { clsx } from 'clsx';
+import { type FC } from 'react';
+import type { IconBaseProps } from './types';
 
 const SortIcon: FC<IconBaseProps> = ({
   fill = '#000',

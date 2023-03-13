@@ -1,21 +1,22 @@
 import './SortableTable.scss';
 
-import { memo, PropsWithChildren, ReactElement, useCallback, useMemo } from 'react';
+import { memo, useCallback, type PropsWithChildren, type ReactElement } from 'react';
 import {
   EColumnIndexKey,
   EKeywordKeys,
-  IKeywordItem,
-  KEYWORDS_COLUMNS,
+  KEYWORDS_COLUMNS_CONFIG,
+  type IKeywordItem,
 } from '../../entities/Keywords';
-import { ITrendingKeywordsIds } from '../../entities/TrendingKeywords';
+import { type ITrendingKeywordsIdsMap } from '../../entities/TrendingKeywords';
 import { ScoreTag } from '../../shared/components/ScoreTag';
 import { SortButton } from '../../shared/components/SortButton';
 import { getScoreTypeByCompetition } from './helpers';
 
 type ITableProps = {
+  // TODO: perhaps we should move this property to a component.
   bodyRows: IKeywordItem[];
   selectedColumnIndex: EColumnIndexKey;
-  trendingKeywordsIds: ITrendingKeywordsIds;
+  trendingKeywordsById: ITrendingKeywordsIdsMap;
   isMobile: boolean;
   onSortButtonClick: (fieldName: EKeywordKeys) => void;
 };
@@ -25,22 +26,15 @@ export const SortableTable = memo(
     bodyRows,
     isMobile,
     selectedColumnIndex,
-    trendingKeywordsIds,
+    trendingKeywordsById,
     onSortButtonClick,
   }: PropsWithChildren<ITableProps>) => {
-    const trendingKeywordsIdsMap = useMemo(() => {
-      return trendingKeywordsIds.reduce<{ [key: number]: boolean }>((acc, trendingId) => {
-        if (!acc[trendingId]) acc[trendingId] = true;
-        return acc;
-      }, {});
-    }, [trendingKeywordsIds]);
-
     const getHeadColumns = useCallback(() => {
-      return KEYWORDS_COLUMNS.reduce<ReactElement[]>((acc, col) => {
+      return KEYWORDS_COLUMNS_CONFIG.reduce<ReactElement[]>((acc, col) => {
         if (
           isMobile &&
           col.key !== EKeywordKeys.KEYWORD &&
-          KEYWORDS_COLUMNS[selectedColumnIndex].key !== col.key
+          KEYWORDS_COLUMNS_CONFIG[selectedColumnIndex].key !== col.key
         ) {
           return acc;
         }
@@ -97,15 +91,12 @@ export const SortableTable = memo(
             <tr className='table-head-row'>{getHeadColumns()}</tr>
           </thead>
           <tbody className='table-body'>
-            {
-              // TODO: After MVP Refactor this part with using data from Store...
-            }
             {bodyRows.map((col) => (
               <tr key={col.id} className='table-body-row'>
                 <td className='table-body-col'>
                   <div className='table-text' title={col.keyword}>
                     {col.keyword}
-                    {trendingKeywordsIdsMap[col.id] && (
+                    {trendingKeywordsById[col.id] && (
                       <span className='table-text-icon'>&#128293;</span>
                     )}
                   </div>

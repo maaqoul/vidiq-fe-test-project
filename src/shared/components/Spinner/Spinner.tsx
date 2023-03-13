@@ -1,7 +1,7 @@
 import './Spin.scss';
 
 import { clsx } from 'clsx';
-import { FC } from 'react';
+import { type FC } from 'react';
 
 type SpinnerProps = {
   size: 'small' | 'medium' | 'large';

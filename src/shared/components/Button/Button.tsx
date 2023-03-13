@@ -1,7 +1,8 @@
 import './Button.scss';
 
-import clsx from 'clsx';
-import React, {
+import { clsx } from 'clsx';
+import type {
+  AriaAttributes,
   ButtonHTMLAttributes,
   DetailedHTMLProps,
   FC,
@@ -13,7 +14,7 @@ import React, {
 
 export interface ButtonProps
   extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-    React.AriaAttributes {
+    AriaAttributes {
   // title?: string;
   // icon?: ReactElement;
   disabled?: boolean;

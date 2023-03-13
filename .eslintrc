@@ -124,6 +124,10 @@
         "aspects": ["invalidHref", "preferButton"]
       }
     ],
+    "import/no-cycle": [2, { "maxDepth": 1 }],
+    "import/no-self-import": "error",
+    // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-restricted-imports.md
+    "@typescript-eslint/no-restricted-imports": ["error"],
     "react/jsx-props-no-spreading": "off"
   },
   "overrides": [
@@ -133,6 +137,13 @@
         "jest": true,
         "node": true
       }
+    },
+    {
+      // https://redux-toolkit.js.org/usage/immer-reducers#linting-state-mutations
+      // feel free to replace with your preferred file pattern - eg. 'src/**/*Slice.ts'
+      "files": ["src/**/*.slice.ts", "src/**/slice/*Slice.ts", "src/**/*Slice.ts"],
+      // avoid state param assignment
+      "rules": { "no-param-reassign": ["error", { "props": false }] }
     }
   ]
 }

@@ -1,10 +1,5 @@
-import {
-  ECompetition,
-  EKeywordKeys,
-  ESortOrderBy,
-  IKeywordItem,
-} from '../../../../../entities/Keywords';
 import { getSortedKeywordsByOrder } from '../helpers';
+import { ECompetition, EKeywordKeys, ESortOrderBy, type IKeywordItem } from '../types';
 
 const keywordsMockDB = [
   {

@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IKeywordItem } from '../entities/Keywords/model/types';
-import { ITrendingKeywordsIds } from '../entities/TrendingKeywords/model/types';
+import { type IKeywordItem } from '../types';
 
 export const keywordsApi = createApi({
   reducerPath: 'keywordsApi',
@@ -14,10 +13,9 @@ export const keywordsApi = createApi({
       query: (limit) => `keywords${limit != null ? `?_limit=${limit}` : ''}`,
       providesTags: [{ type: 'Keywords', id: 'List' }],
     }),
-    getAllTrendingKeywordsIds: build.query<ITrendingKeywordsIds, void>({
-      query: () => `trending-keywords`,
-    }),
   }),
 });
 
-export const { useGetKeywordsQuery, useGetAllTrendingKeywordsIdsQuery } = keywordsApi;
+export const { useGetKeywordsQuery, useLazyGetKeywordsQuery } = keywordsApi;
+
+export const useKeywordsQuery = keywordsApi.endpoints.getKeywords.useQuery;
