@@ -53,19 +53,17 @@ export const Keywords: FC = () => {
   const isLoadingErrorTrendingKeywords = useAppSelector(selectIsLoadingErrorTrendingKeywordsIds);
 
   // TODO: Implement useLocalStorageByKeys([ { storageKey, initialValue }, { storageKey, initialValue } ])
-  const [storedCurrentPageNumber, setStoredCurrentPageNumber] = useLocalStorage(
+  // NOTE: It is very important to have a single source of truth.
+  const [, setStoredSelectedPageNumber] = useLocalStorage(
     SELECTED_PAGINATION_PAGE_LOCAL_STORAGE_KEY,
     selectedPageNumber,
   );
-  const [storedSelectedColumnIndex, setStoredSelectedColumnIndex] = useLocalStorage(
+  const [, setStoredSelectedColumnIndex] = useLocalStorage(
     MOBILE_TABLE_SELECTED_COLUMN_LOCAL_STORAGE_KEY,
     selectedColumnIndex,
   );
-  const [storedSortBy, setStoredSortBy] = useLocalStorage(
-    SORT_ORDER_BY_LOCAL_STORAGE_KEY,
-    selectedOrderBy,
-  );
-  const [storedFieldName, setStoredFieldName] = useLocalStorage(
+  const [, setStoredSortBy] = useLocalStorage(SORT_ORDER_BY_LOCAL_STORAGE_KEY, selectedOrderBy);
+  const [, setStoredFieldName] = useLocalStorage(
     SORT_ORDER_FIELD_NAME_LOCAL_STORAGE_KEY,
     selectedFieldName,
   );
@@ -73,11 +71,12 @@ export const Keywords: FC = () => {
   const onSortButtonClick = useCallback(
     (nextSelectedFieldName: EKeywordKeys) => {
       const sortOrderBy =
-        storedSortBy === ESortOrderBy.ASC && storedFieldName === nextSelectedFieldName
+        selectedOrderBy === ESortOrderBy.ASC && selectedFieldName === nextSelectedFieldName
           ? ESortOrderBy.DESC
           : ESortOrderBy.ASC;
-      if (storedSortBy !== sortOrderBy) setStoredSortBy(sortOrderBy);
-      if (storedFieldName !== nextSelectedFieldName) setStoredFieldName(nextSelectedFieldName);
+      if (selectedOrderBy === sortOrderBy && selectedFieldName === nextSelectedFieldName) return;
+      if (selectedOrderBy !== sortOrderBy) setStoredSortBy(sortOrderBy);
+      if (selectedFieldName !== nextSelectedFieldName) setStoredFieldName(nextSelectedFieldName);
       dispatch(
         setSortOrder({
           selectedFieldName: nextSelectedFieldName,
@@ -85,7 +84,7 @@ export const Keywords: FC = () => {
         }),
       );
     },
-    [dispatch, setStoredFieldName, setStoredSortBy, storedFieldName, storedSortBy],
+    [dispatch, setStoredFieldName, setStoredSortBy, selectedFieldName, selectedOrderBy],
   );
 
   useEffect(() => {
@@ -111,13 +110,12 @@ export const Keywords: FC = () => {
     <div className='container'>
       <PageHeader
         isMobile={isMobile}
-        selectedColumnIndex={storedSelectedColumnIndex}
+        selectedColumnIndex={selectedColumnIndex}
         onSelectedColumnIndexChange={(option) => {
           const selectedColumnIndexByKey = KEYWORD_INDEX_BY_KEY[option.key];
-          if (selectedColumnIndexByKey !== storedSelectedColumnIndex) {
-            setStoredSelectedColumnIndex(selectedColumnIndexByKey);
-            dispatch(setSelectedColumnIndex(selectedColumnIndexByKey));
-          }
+          if (selectedColumnIndexByKey === selectedColumnIndex) return;
+          setStoredSelectedColumnIndex(selectedColumnIndexByKey);
+          dispatch(setSelectedColumnIndex(selectedColumnIndexByKey));
         }}
       />
       <main className='wrapper'>
@@ -125,7 +123,7 @@ export const Keywords: FC = () => {
           <SortableTable
             bodyRows={sortedSlicedKeywords}
             isMobile={isMobile}
-            selectedColumnIndex={storedSelectedColumnIndex}
+            selectedColumnIndex={selectedColumnIndex}
             trendingKeywordsById={trendingKeywordsById}
             onSortButtonClick={onSortButtonClick}
           />
@@ -133,11 +131,12 @@ export const Keywords: FC = () => {
       </main>
       <footer>
         <Pagination
-          currentPageNumber={storedCurrentPageNumber}
+          currentPageNumber={selectedPageNumber}
           itemsPerPage={rowsLimitPerPage}
           totalItems={totalKeywordsNumber}
           onChangePage={(nextPage: EColumnIndexKey) => {
-            setStoredCurrentPageNumber(nextPage);
+            if (selectedPageNumber === nextPage) return;
+            setStoredSelectedPageNumber(nextPage);
             dispatch(setSelectedPageNumber(nextPage));
           }}
         />

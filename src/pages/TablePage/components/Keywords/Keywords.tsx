@@ -1,6 +1,6 @@
 import './Keywords.scss';
 
-import { useEffect, useState, type FC } from 'react';
+import { useEffect, useMemo, useState, type FC } from 'react';
 import {
   DEFAULT_PAGINATION_PAGE,
   DEFAULT_ROWS_LIMIT,
@@ -71,6 +71,13 @@ export const Keywords: FC = () => {
       ? storedDefaultPageNumber
       : DEFAULT_PAGINATION_PAGE;
 
+  const trendingKeywordsById = useMemo(() => {
+    return trendingKeywordsIds.reduce((acc, item) => {
+      if (!acc[item]) acc[item] = true;
+      return acc;
+    }, {} as ITrendingKeywordsIdsMap);
+  }, [trendingKeywordsIds]);
+
   useEffect(() => {
     const doSortKeywords = () => {
       if (keywords?.length) {
@@ -107,16 +114,12 @@ export const Keywords: FC = () => {
         <div className='main'>
           <SortableTable
             bodyRows={
-              // TODO: FIX ME!!! SHOULD BE REFACTORED!!!
-              // but, I'm a little tired, I just want to show that it works.
+              // NOTE: All issues is fixed in the KeywordsRedux.tsx file.
               getSlicedArray(sortedKeywrods, currentPage, DEFAULT_ROWS_LIMIT)
             }
             isMobile={isMobile}
             selectedColumnIndex={storedSelectedColumnIndex}
-            trendingKeywordsById={trendingKeywordsIds.reduce((acc, item) => {
-              if (!acc[item]) acc[item] = true;
-              return acc;
-            }, {} as ITrendingKeywordsIdsMap)}
+            trendingKeywordsById={trendingKeywordsById}
             onSortButtonClick={(selectedFieldName) => {
               setStoredFieldName(selectedFieldName);
               const sortOrderBy =
